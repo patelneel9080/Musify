@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musify/firstpage.dart';
-import 'package:musify/homescreen.dart';
-import 'package:musify/playlistpage.dart';
-import 'package:musify/testtwo.dart';
+import 'package:musify/playlist_page.dart';
 
 
 void main() async {
@@ -22,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Musify',
       debugShowCheckedModeBanner: false,
-      home:  PlaylistPage(),
+      home:  Playlistpage(),
     );
   }
 }
