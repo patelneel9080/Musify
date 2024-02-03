@@ -13,6 +13,11 @@ List<Audio> songs = [
           artist: 'Ruth B',
           image: const MetasImage.network(
               'https://i.scdn.co/image/ab67616d0000b27397e971f3e53475091dc8d707'))),
+  Audio('assets/songs/Hymn-For-The-Weekend(PaglaSongs).mp3',
+      metas: Metas(
+          title: 'Hymn For The Weekend',
+          artist: 'Coldplay',
+          image: const MetasImage.network('https://i1.sndcdn.com/artworks-000298133805-69dzfo-t500x500.jpg'))),
   Audio('assets/songs/Heat-Waves(PagalWorld).mp3',
       metas: Metas(
           title: 'Heat Waves',
@@ -33,11 +38,7 @@ List<Audio> songs = [
           title: 'Unstoppable',
           artist: 'Sia',
           image: const MetasImage.network('https://i.scdn.co/image/ab67616d0000b273754b2fddebe7039fdb912837'))),
-  Audio('assets/songs/Hymn-For-The-Weekend(PaglaSongs).mp3',
-      metas: Metas(
-          title: 'Hymn For The Weekend',
-          artist: 'Coldplay',
-          image: const MetasImage.network('https://i1.sndcdn.com/artworks-000298133805-69dzfo-t500x500.jpg'))),
+
   Audio('assets/songs/Maharani-(DJPunjab).mp3',
       metas: Metas(
           title: 'Maharani',
@@ -68,7 +69,6 @@ List<Audio> songs = [
           title: 'After Hours',
           artist: ' The Weeknd',
           image: const MetasImage.network('https://upload.wikimedia.org/wikipedia/en/c/c1/The_Weeknd_-_After_Hours.png'))),
-
 ];
 
 String durationFormat(Duration duration) {
