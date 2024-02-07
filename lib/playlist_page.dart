@@ -21,6 +21,8 @@
     TextEditingController searchController = TextEditingController();
     List<Audio> filteredSongs = songs; // Initially, show all songs.
 
+    List<Audio> likedSongs = [];
+
     late final AnimationController _animationController =
     AnimationController(vsync: this, duration: const Duration(seconds: 3));
 
@@ -60,6 +62,7 @@
             .toList();
       });
     }
+   
 
     @override
     Widget build(BuildContext context) {
