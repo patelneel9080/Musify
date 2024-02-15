@@ -16,7 +16,8 @@ Welcome to the Musify Application.
 ### Pictures of application 
 
 
-<img src="https://github.com/patelneel9080/Musify/assets/136300996/032e2ab3-7cdf-453c-8cfa-130fe823dd97" width = "100%"/>
+
+<img src="https://github.com/patelneel9080/Musify/assets/136300996/5137a88f-6667-4c22-8a87-7392549a1d85" width = "100%"/>
 
 
 
