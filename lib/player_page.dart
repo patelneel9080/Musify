@@ -1,14 +1,17 @@
+import 'dart:io';
+
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:draggable_bottom_sheet/draggable_bottom_sheet.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:musify/utlis.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 import 'app_const.dart';
-
 class PlayerPage extends StatefulWidget {
   const PlayerPage({required this.player, Key? key}) : super(key: key);
   final AssetsAudioPlayer player;
@@ -22,7 +25,26 @@ class _PlayerPageState extends State<PlayerPage> {
   Duration position = Duration.zero;
   bool isPlaying = true;
   bool isReplayMode = false;
+  String? fileName; // Variable to store the file name
 
+  Future<void> _addSongsFromDevice() async {
+    // Implement logic to select songs from device storage
+    // For example, using file picker or any other package
+    // For demonstration, I'm assuming the user has selected a single audio file
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.audio,
+    );
+
+    if (result != null) {
+      String? filePath = result.files.single.path;
+      fileName = result.files.single.name; // Extract file name
+      if (filePath != null && fileName != null) {
+        await widget.player.open(Audio.file(filePath, metas: Metas(
+          title: fileName, // Assign file name as title
+        )));
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -59,12 +81,19 @@ class _PlayerPageState extends State<PlayerPage> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {
-
-          }, icon: Icon(CupertinoIcons.heart,color: Colors.white,))
+          IconButton(
+            onPressed: _addSongsFromDevice,
+            icon: Icon(CupertinoIcons.add, color: Colors.white),
+          )
         ],
         centerTitle: true,
-        title: Text("NOW PLAYING",style: GoogleFonts.aBeeZee(color: Colors.white70,fontSize: 18),),
+        title: Text(
+          "NOW PLAYING",
+          style: GoogleFonts.aBeeZee(
+            color: Colors.white70,
+            fontSize: 18,
+          ),
+        ),
         backgroundColor: Colors.transparent,
         leading: Padding(
           padding: const EdgeInsets.only(left: 10),
@@ -110,22 +139,22 @@ class _PlayerPageState extends State<PlayerPage> {
             child: Column(
               children: [
                 Text(
-                  widget.player.getCurrentAudioTitle,
+                  fileName ?? "", // Display the file name of the selected song
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(
-                  height: size.height/86,
+                  height: size.height / 86,
                 ),
                 Text(
                   widget.player.getCurrentAudioArtist,
                   style: const TextStyle(fontSize: 20, color: Colors.white70),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 20,
+                  height: MediaQuery.of(context).size.height / 34,
                 ),
                 IntrinsicHeight(
                   child: Row(
@@ -160,13 +189,14 @@ class _PlayerPageState extends State<PlayerPage> {
                 await widget.player.seek(Duration(seconds: value.toInt()));
               },
               innerWidget: (percentage) {
+                final currentImage = widget.player.getCurrentAudioImage?.path;
                 return Padding(
                   padding: const EdgeInsets.all(25.0),
                   child: CircleAvatar(
                     backgroundColor: Colors.grey,
-                    backgroundImage: NetworkImage(
-                      widget.player.getCurrentAudioImage?.path ?? '',
-                    ),
+                    backgroundImage: currentImage != null
+                        ? AssetImage(currentImage)
+                        : AssetImage('assets/images/placeholder.png'), // Placeholder image asset
                   ),
                 );
               },
@@ -197,7 +227,6 @@ class _PlayerPageState extends State<PlayerPage> {
                 children: [
                   IconButton(
                     onPressed: () async {
-                      // Assuming this is shuffle, you can change it accordingly
                       await widget.player.shuffle;
                     },
                     icon: const Icon(
@@ -216,7 +245,6 @@ class _PlayerPageState extends State<PlayerPage> {
                       color: Colors.white,
                     ),
                   ),
-
                   IconButton(
                     onPressed: () async {
                       await widget.player.playOrPause();
@@ -246,24 +274,22 @@ class _PlayerPageState extends State<PlayerPage> {
                   ),
                   IconButton(
                     onPressed: () async {
-                      // Toggle replay mode and update the button color
                       setState(() {
                         isReplayMode = !isReplayMode;
                       });
 
-                      // Set the replay mode for the player
                       await widget.player.setLoopMode(
                         isReplayMode ? LoopMode.single : LoopMode.playlist,
                       );
                     },
-                    icon:  Icon(
+                    icon: Icon(
                       Icons.replay_rounded,
                       size: 35,
                       color: isReplayMode ? Colors.white : Colors.grey,
                     ),
                   ),
                 ],
-              )
+              ),
             ),
           ),
         ],

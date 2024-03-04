@@ -7,8 +7,8 @@ void main() async {
   //initialise the hive
 
   runApp(
-    DevicePreview(builder: (context) => MyApp(),enabled: true,)
-    // const MyApp(),
+    // DevicePreview(builder: (context) => MyApp(),enabled: true,)
+    const MyApp(),
   );
 }
 
