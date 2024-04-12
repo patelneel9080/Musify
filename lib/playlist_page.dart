@@ -24,7 +24,6 @@ class _PlaylistpageState extends State<Playlistpage>
   TextEditingController searchController = TextEditingController();
   List<Audio> filteredSongs = songs; // Initially, show all songs.
   List<Audio> likedSongs = [];
-
   late final AnimationController _animationController =
   AnimationController(vsync: this, duration: const Duration(seconds: 3));
 
@@ -105,10 +104,10 @@ class _PlaylistpageState extends State<Playlistpage>
             SizedBox(height: size.height / 64),
             Row(
               children: [
-                IconButton(
-                  onPressed: addSongsFromDevice,
-                  icon: Icon(Icons.add),
-                ),
+                // IconButton(
+                //   onPressed: addSongsFromDevice,
+                //   icon: Icon(Icons.add),
+                // ),
                 Expanded(
                   child: TextField(
                     controller: searchController,

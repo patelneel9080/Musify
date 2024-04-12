@@ -21,9 +21,13 @@ class PlayerPage extends StatefulWidget {
 }
 
 class _PlayerPageState extends State<PlayerPage> {
+  final player = AssetsAudioPlayer();
+  List<Audio> filteredSongs = List.from(songs);
+
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
   bool isPlaying = true;
+  bool isShuffleOn = false;
   bool isReplayMode = false;
   String? fileName; // Variable to store the file name
 
@@ -45,7 +49,6 @@ class _PlayerPageState extends State<PlayerPage> {
       }
     }
   }
-
   @override
   void initState() {
     widget.player.isPlaying.listen((event) {
@@ -227,12 +230,19 @@ class _PlayerPageState extends State<PlayerPage> {
                 children: [
                   IconButton(
                     onPressed: () async {
-                      await widget.player.shuffle;
+                      setState(() {
+                        isShuffleOn = !isShuffleOn; // Toggle shuffle state
+                      });
+                      if (isShuffleOn) {
+                        await player.shuffle;
+                      } else {
+                        await player.shuffle;
+                      }
                     },
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.shuffle,
                       size: 35,
-                      color: Colors.white,
+                      color: isShuffleOn ? Colors.blue : Colors.white, // Change color based on shuffle state
                     ),
                   ),
                   IconButton(
@@ -285,7 +295,7 @@ class _PlayerPageState extends State<PlayerPage> {
                     icon: Icon(
                       Icons.replay_rounded,
                       size: 35,
-                      color: isReplayMode ? Colors.white : Colors.grey,
+                      color: isReplayMode ? Colors.blue : Colors.grey,
                     ),
                   ),
                 ],
