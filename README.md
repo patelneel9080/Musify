@@ -13,7 +13,7 @@ Welcome to the Musify Application.
 - Offline first architecture.
 
 
-### Pictures of application 
+### Template of application 
 
 
 
